@@ -13,7 +13,7 @@ export default function ProductIndex({ auth, categories, products }) {
             name: 'Product Name',
         },
         {
-            key: 'product_category_id',
+            key: 'product_category',
             name: 'Product Category',
         },
         {
@@ -35,18 +35,14 @@ export default function ProductIndex({ auth, categories, products }) {
     const [buttonsVisibility, setButtonsVisibility] = useState({});
     const { data, setData, get, post, put, processing, errors, reset } = useForm({
         name: '',
-        product_category_id: '',
         product_category: {
-            label: '',
-            value: '',
+            label: categories[0].name,
+            value: categories[0].id,
         },
         description: '',
         weight_per_sack: 0,
         quantity: 0,
     });
-
-
-    console.log(auth)
 
     const toggleDialog = () => setIsDialogOpen(!isDialogOpen);
 
@@ -68,7 +64,6 @@ export default function ProductIndex({ auth, categories, products }) {
     };
 
     const handleSelectChange = (key, value) => {
-        console.log(value)
         setData(prev => ({ ...prev, [key]: value }));
     };
 
@@ -226,7 +221,7 @@ export default function ProductIndex({ auth, categories, products }) {
                                 {/* Dropdown for Product Categories */}
                                 <select 
                                     id="product_category"
-                                    value={data.product_category ? JSON.stringify({label: data.product_category.label, value: data.product_category.value}) : ""}
+                                    value={JSON.stringify({label: data.product_category.label, value: data.product_category.value})}
                                     className="mt-2 block w-full rounded-md border-gray-300 shadow-sm"
                                     onChange={(e) => {
                                         const selectedCategory = JSON.parse(e.target.value);
